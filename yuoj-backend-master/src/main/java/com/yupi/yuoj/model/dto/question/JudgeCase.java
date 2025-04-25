@@ -3,18 +3,18 @@ package com.yupi.yuoj.model.dto.question;
 import lombok.Data;
 
 /**
- * 题目用例
+ * Examples of topics
  */
 @Data
 public class JudgeCase {
 
     /**
-     * 输入用例
+     * Input Use Cases
      */
     private String input;
 
     /**
-     * 输出用例
+     * Output use case
      */
     private String output;
 }

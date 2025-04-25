@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
 /**
- * Sample code sandbox (just to run through the business process)
+ * Sample code sandbox (only for running business processes smoothly)
  */
 @Slf4j
 public class ExampleCodeSandbox implements CodeSandbox {

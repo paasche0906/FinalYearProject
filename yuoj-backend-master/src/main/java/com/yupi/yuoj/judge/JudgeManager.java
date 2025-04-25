@@ -9,13 +9,13 @@ import com.yupi.yuoj.model.entity.QuestionSubmit;
 import org.springframework.stereotype.Service;
 
 /**
- * 判题管理（简化调用）
+ * Judgement management (simplified calls)
  */
 @Service
 public class JudgeManager {
 
     /**
-     * 执行判题
+     * Enforcement of judgements
      *
      * @param judgeContext
      * @return

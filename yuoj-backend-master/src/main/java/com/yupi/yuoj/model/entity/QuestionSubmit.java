@@ -7,7 +7,7 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 题目提交
+ * Title Submission
  * @TableName question_submit
  */
 @TableName(value ="question_submit")
@@ -20,47 +20,47 @@ public class QuestionSubmit implements Serializable {
     private Long id;
 
     /**
-     * 编程语言
+     * programming language
      */
     private String language;
 
     /**
-     * 用户代码
+     * user code
      */
     private String code;
 
     /**
-     * 判题信息（json 对象）
+     * Judgement information (json object)
      */
     private String judgeInfo;
 
     /**
-     * 判题状态（0 - 待判题、1 - 判题中、2 - 成功、3 - 失败）
+     * Judgement status (0 - pending judgement, 1 - judgement in progress, 2 - successful, 3 - failed)
      */
     private Integer status;
 
     /**
-     * 题目 id
+     * Title id
      */
     private Long questionId;
 
     /**
-     * 创建用户 id
+     * Create user id
      */
     private Long userId;
 
     /**
-     * 创建时间
+     * Creation time
      */
     private Date createTime;
 
     /**
-     * 更新时间
+     * update time
      */
     private Date updateTime;
 
     /**
-     * 是否删除
+     * Delete or not
      */
     @TableLogic
     private Integer isDelete;

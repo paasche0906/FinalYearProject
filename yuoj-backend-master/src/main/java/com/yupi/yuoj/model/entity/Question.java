@@ -7,7 +7,7 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 题目
+ * title
  * @TableName question
  */
 @TableName(value ="question")
@@ -20,72 +20,72 @@ public class Question implements Serializable {
     private Long id;
 
     /**
-     * 标题
+     * caption
      */
     private String title;
 
     /**
-     * 内容
+     * element
      */
     private String content;
 
     /**
-     * 标签列表（json 数组）
+     * List of tags (json array)
      */
     private String tags;
 
     /**
-     * 题目答案
+     * Answers to the questions
      */
     private String answer;
 
     /**
-     * 题目提交数
+     * Number of topic submissions
      */
     private Integer submitNum;
 
     /**
-     * 题目通过数
+     * The title passes through the number of
      */
     private Integer acceptedNum;
 
     /**
-     * 判题用例（json 数组）
+     * Problem examples (json arrays)
      */
     private String judgeCase;
 
     /**
-     * 判题配置（json 对象）
+     * Judgement Configuration (json object)
      */
     private String judgeConfig;
 
     /**
-     * 点赞数
+     * number of likes (on a website)
      */
     private Integer thumbNum;
 
     /**
-     * 收藏数
+     * Number of collections
      */
     private Integer favourNum;
 
     /**
-     * 创建用户 id
+     * Create user id
      */
     private Long userId;
 
     /**
-     * 创建时间
+     * Creation time
      */
     private Date createTime;
 
     /**
-     * 更新时间
+     * update time
      */
     private Date updateTime;
 
     /**
-     * 是否删除
+     * Delete or not
      */
     @TableLogic
     private Integer isDelete;

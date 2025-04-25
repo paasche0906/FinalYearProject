@@ -13,12 +13,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 
 /**
- * 增量同步帖子到 es
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * Incremental synchronisation of posts to es
  */
-// todo 取消注释开启任务
+
 //@Component
 @Slf4j
 public class IncSyncPostToEs {
@@ -30,11 +27,11 @@ public class IncSyncPostToEs {
     private PostEsDao postEsDao;
 
     /**
-     * 每分钟执行一次
+     * Performed every minute
      */
     @Scheduled(fixedRate = 60 * 1000)
     public void run() {
-        // 查询近 5 分钟内的数据
+        // Query the data within the recent 5 minutes
         Date fiveMinutesAgoDate = new Date(new Date().getTime() - 5 * 60 * 1000L);
         List<Post> postList = postMapper.listPostWithDelete(fiveMinutesAgoDate);
         if (CollectionUtils.isEmpty(postList)) {

@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 用户查询请求
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * User Query Request
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -20,27 +17,27 @@ public class UserQueryRequest extends PageRequest implements Serializable {
     private Long id;
 
     /**
-     * 开放平台id
+     * Open platform id
      */
     private String unionId;
 
     /**
-     * 公众号openId
+     * Public openId
      */
     private String mpOpenId;
 
     /**
-     * 用户昵称
+     * user nickname
      */
     private String userName;
 
     /**
-     * 简介
+     * brief
      */
     private String userProfile;
 
     /**
-     * 用户角色：user/admin/ban
+     * User roles: user/admin/ban
      */
     private String userRole;
 

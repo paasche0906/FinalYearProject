@@ -41,7 +41,7 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 /**
- * 表单信息
+ * form information
  */
 const form = reactive({
   userAccount: "",
@@ -52,12 +52,12 @@ const router = useRouter();
 const store = useStore();
 
 /**
- * 提交表单
+ * Submit form
  * @param data
  */
 const handleSubmit = async () => {
   const res = await UserControllerService.userLoginUsingPost(form);
-  // 登录成功，跳转到主页
+  // Login successfully, jump to homepage
   if (res.code === 0) {
     await store.dispatch("user/getLoginUser");
     router.push({

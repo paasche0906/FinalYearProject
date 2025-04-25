@@ -7,5 +7,12 @@ import com.yupi.yuoj.judge.codesandbox.model.ExecuteCodeResponse;
  * Code Sandbox Interface Definition
  */
 public interface CodeSandbox {
+
+    /**
+     * executable code
+     *
+     * @param executeCodeRequest
+     * @return
+     */
     ExecuteCodeResponse executeCode(ExecuteCodeRequest executeCodeRequest);
 }

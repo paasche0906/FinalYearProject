@@ -12,12 +12,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.boot.CommandLineRunner;
 
 /**
- * 全量同步帖子到 es
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * Full synchronisation of posts to es
  */
-// todo 取消注释开启任务
+
 //@Component
 @Slf4j
 public class FullSyncPostToEs implements CommandLineRunner {

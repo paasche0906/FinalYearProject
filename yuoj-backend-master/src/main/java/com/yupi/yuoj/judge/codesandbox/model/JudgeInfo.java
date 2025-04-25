@@ -3,23 +3,23 @@ package com.yupi.yuoj.judge.codesandbox.model;
 import lombok.Data;
 
 /**
- * 判题信息
+ * Judging Information
  */
 @Data
 public class JudgeInfo {
 
     /**
-     * Programme execution information
+     * programme execution information
      */
     private String message;
 
     /**
-     * Memory consumption
+     * memory consumption
      */
     private Long memory;
 
     /**
-     * Time consumption
+     * Consumption time (KB)
      */
     private Long time;
 }

@@ -50,25 +50,23 @@ const loadData = async () => {
     dataList.value = res.data.records;
     total.value = res.data.total;
   } else {
-    message.error("加载失败，" + res.message);
+    message.error("Failed to load." + res.message);
   }
 };
 
 /**
- * 监听 searchParams 变量，改变时触发页面的重新加载
+ * Listens to the searchParams variable and triggers a page reload when it changes.
  */
 watchEffect(() => {
   loadData();
 });
 
 /**
- * 页面加载时，请求数据
+ * Requesting data when the page loads
  */
 onMounted(() => {
   loadData();
 });
-
-// {id: "1", title: "A+ D", content: "新的题目内容", tags: "["二叉树"]", answer: "新的答案", submitNum: 0,…}
 
 const columns = [
   {

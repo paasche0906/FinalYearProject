@@ -3,15 +3,12 @@ package com.yupi.yuoj.exception;
 import com.yupi.yuoj.common.ErrorCode;
 
 /**
- * 抛异常工具类
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * Exception Throwing Tool Class
  */
 public class ThrowUtils {
 
     /**
-     * 条件成立则抛异常
+     * Throws an exception if the condition is true
      *
      * @param condition
      * @param runtimeException
@@ -23,7 +20,7 @@ public class ThrowUtils {
     }
 
     /**
-     * 条件成立则抛异常
+     * Throws an exception if the condition is true
      *
      * @param condition
      * @param errorCode
@@ -33,7 +30,7 @@ public class ThrowUtils {
     }
 
     /**
-     * 条件成立则抛异常
+     * Throws an exception if the condition is true
      *
      * @param condition
      * @param errorCode

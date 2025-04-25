@@ -5,15 +5,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.yupi.yuoj.model.entity.User;
 
 /**
- * 帖子点赞服务
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * Post Liking Service
  */
 public interface PostThumbService extends IService<PostThumb> {
 
     /**
-     * 点赞
+     * pointing and calling (e.g. camera)
      *
      * @param postId
      * @param loginUser
@@ -22,7 +19,7 @@ public interface PostThumbService extends IService<PostThumb> {
     int doPostThumb(long postId, User loginUser);
 
     /**
-     * 帖子点赞（内部服务）
+     * Post likes (internal service)
      *
      * @param userId
      * @param postId

@@ -21,7 +21,7 @@ public class ExecuteCodeResponse {
     private String message;
 
     /**
-     * Execution status
+     * execution status (computing)
      */
     private Integer status;
 

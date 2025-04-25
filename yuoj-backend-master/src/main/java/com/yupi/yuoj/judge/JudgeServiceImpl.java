@@ -41,34 +41,34 @@ public class JudgeServiceImpl implements JudgeService {
 
     @Override
     public QuestionSubmit doJudge(long questionSubmitId) {
-        // 1）传入题目的提交 id，获取到对应的题目、提交信息（包含代码、编程语言等）
+        // 1) Pass in the submission id of the topic and get the corresponding topic and submission information (including code, programming language, etc.).
         QuestionSubmit questionSubmit = questionSubmitService.getById(questionSubmitId);
         if (questionSubmit == null) {
-            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "提交信息不存在");
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "Submission information does not exist");
         }
         Long questionId = questionSubmit.getQuestionId();
         Question question = questionService.getById(questionId);
         if (question == null) {
-            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "题目不存在");
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "Title does not exist");
         }
-        // 2）如果题目提交状态不为等待中，就不用重复执行了
+        // 2) If the topic submission status is not pending, you don't have to repeat the execution
         if (!questionSubmit.getStatus().equals(QuestionSubmitStatusEnum.WAITING.getValue())) {
-            throw new BusinessException(ErrorCode.OPERATION_ERROR, "题目正在判题中");
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "The question is being judged");
         }
-        // 3）更改判题（题目提交）的状态为 “判题中”，防止重复执行
+        // 3) Change the status of the judgement (title submission) to "Judgement in progress" to prevent duplicate executions
         QuestionSubmit questionSubmitUpdate = new QuestionSubmit();
         questionSubmitUpdate.setId(questionSubmitId);
         questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.RUNNING.getValue());
         boolean update = questionSubmitService.updateById(questionSubmitUpdate);
         if (!update) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目状态更新错误");
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "Title status update error");
         }
-        // 4）调用沙箱，获取到执行结果
+        // 4) Call the sandbox and get the execution result
         CodeSandbox codeSandbox = CodeSandboxFactory.newInstance(type);
         codeSandbox = new CodeSandboxProxy(codeSandbox);
         String language = questionSubmit.getLanguage();
         String code = questionSubmit.getCode();
-        // 获取输入用例
+        // Getting Input Use Cases
         String judgeCaseStr = question.getJudgeCase();
         List<JudgeCase> judgeCaseList = JSONUtil.toList(judgeCaseStr, JudgeCase.class);
         List<String> inputList = judgeCaseList.stream().map(JudgeCase::getInput).collect(Collectors.toList());
@@ -79,7 +79,7 @@ public class JudgeServiceImpl implements JudgeService {
                 .build();
         ExecuteCodeResponse executeCodeResponse = codeSandbox.executeCode(executeCodeRequest);
         List<String> outputList = executeCodeResponse.getOutputList();
-        // 5）根据沙箱的执行结果，设置题目的判题状态和信息
+        // 5) Setting the status and information of the questions based on the results of the sandbox execution
         JudgeContext judgeContext = new JudgeContext();
         judgeContext.setJudgeInfo(executeCodeResponse.getJudgeInfo());
         judgeContext.setInputList(inputList);
@@ -88,14 +88,14 @@ public class JudgeServiceImpl implements JudgeService {
         judgeContext.setQuestion(question);
         judgeContext.setQuestionSubmit(questionSubmit);
         JudgeInfo judgeInfo = judgeManager.doJudge(judgeContext);
-        // 6）修改数据库中的判题结果
+        // 6) Modify the results of the judgement in the database
         questionSubmitUpdate = new QuestionSubmit();
         questionSubmitUpdate.setId(questionSubmitId);
         questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.SUCCEED.getValue());
         questionSubmitUpdate.setJudgeInfo(JSONUtil.toJsonStr(judgeInfo));
         update = questionSubmitService.updateById(questionSubmitUpdate);
         if (!update) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目状态更新错误");
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "Title status update error");
         }
         QuestionSubmit questionSubmitResult = questionSubmitService.getById(questionId);
         return questionSubmitResult;

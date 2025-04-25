@@ -7,12 +7,12 @@ export default {
   namespaced: true,
   state: () => ({
     loginUser: {
-      userName: "未登录",
+      userName: "not logged in",
     },
   }),
   actions: {
     async getLoginUser({ commit, state }, payload) {
-      // 从远程请求获取登录信息
+      // Getting login information from a remote request
       const res = await UserControllerService.getLoginUserUsingGet();
       if (res.code === 0) {
         commit("updateUser", res.data);

@@ -4,16 +4,13 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * 文件上传请求
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * File Upload Request
  */
 @Data
 public class UploadFileRequest implements Serializable {
 
     /**
-     * 业务
+     * professional work
      */
     private String biz;
 

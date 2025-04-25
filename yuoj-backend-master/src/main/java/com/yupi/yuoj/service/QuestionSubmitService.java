@@ -14,24 +14,20 @@ import com.yupi.yuoj.model.vo.QuestionVO;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
-* @author 李鱼皮
-* @description 针对表【question_submit(题目提交)】的数据库操作Service
-* @createDate 2023-08-07 20:58:53
-*/
+
 public interface QuestionSubmitService extends IService<QuestionSubmit> {
     
     /**
-     * 题目提交
+     * Title Submission
      *
-     * @param questionSubmitAddRequest 题目提交信息
+     * @param questionSubmitAddRequest Title Submission Information
      * @param loginUser
      * @return
      */
     long doQuestionSubmit(QuestionSubmitAddRequest questionSubmitAddRequest, User loginUser);
 
     /**
-     * 获取查询条件
+     * Get query conditions
      *
      * @param questionSubmitQueryRequest
      * @return
@@ -39,7 +35,7 @@ public interface QuestionSubmitService extends IService<QuestionSubmit> {
     QueryWrapper<QuestionSubmit> getQueryWrapper(QuestionSubmitQueryRequest questionSubmitQueryRequest);
 
     /**
-     * 获取题目封装
+     * Get the title package
      *
      * @param questionSubmit
      * @param loginUser
@@ -48,7 +44,7 @@ public interface QuestionSubmitService extends IService<QuestionSubmit> {
     QuestionSubmitVO getQuestionSubmitVO(QuestionSubmit questionSubmit, User loginUser);
 
     /**
-     * 分页获取题目封装
+     * Paging for topic encapsulation
      *
      * @param questionSubmitPage
      * @param loginUser

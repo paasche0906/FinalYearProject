@@ -9,10 +9,7 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 帖子点赞
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * Post Likes
  */
 @TableName(value = "post_thumb")
 @Data
@@ -25,22 +22,22 @@ public class PostThumb implements Serializable {
     private Long id;
 
     /**
-     * 帖子 id
+     * Post id
      */
     private Long postId;
 
     /**
-     * 创建用户 id
+     * Create user id
      */
     private Long userId;
 
     /**
-     * 创建时间
+     * Creation time
      */
     private Date createTime;
 
     /**
-     * 更新时间
+     * update time
      */
     private Date updateTime;
 

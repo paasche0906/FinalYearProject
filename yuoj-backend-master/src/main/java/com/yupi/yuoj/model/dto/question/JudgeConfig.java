@@ -3,23 +3,23 @@ package com.yupi.yuoj.model.dto.question;
 import lombok.Data;
 
 /**
- * 题目配置
+ * Title Configuration
  */
 @Data
 public class JudgeConfig {
 
     /**
-     * 时间限制（ms）
+     * time limit（ms）
      */
     private Long timeLimit;
 
     /**
-     * 内存限制（KB）
+     * memory limit（KB）
      */
     private Long memoryLimit;
 
     /**
-     * 堆栈限制（KB）
+     * stack limit（KB）
      */
     private Long stackLimit;
 }

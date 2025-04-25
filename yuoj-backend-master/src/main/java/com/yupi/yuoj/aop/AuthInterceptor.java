@@ -18,10 +18,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
- * 权限校验 AOP
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * authority verification AOP
  */
 @Aspect
 @Component
@@ -31,7 +28,7 @@ public class AuthInterceptor {
     private UserService userService;
 
     /**
-     * 执行拦截
+     * Enforcement Interception
      *
      * @param joinPoint
      * @param authCheck
@@ -42,27 +39,27 @@ public class AuthInterceptor {
         String mustRole = authCheck.mustRole();
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-        // 当前登录用户
+        // Currently logged in user
         User loginUser = userService.getLoginUser(request);
-        // 必须有该权限才通过
+        // You must have this permission to pass
         if (StringUtils.isNotBlank(mustRole)) {
             UserRoleEnum mustUserRoleEnum = UserRoleEnum.getEnumByValue(mustRole);
             if (mustUserRoleEnum == null) {
                 throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
             }
             String userRole = loginUser.getUserRole();
-            // 如果被封号，直接拒绝
+            // If you are blocked, just refuse
             if (UserRoleEnum.BAN.equals(mustUserRoleEnum)) {
                 throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
             }
-            // 必须有管理员权限
+            // Must have administrator rights
             if (UserRoleEnum.ADMIN.equals(mustUserRoleEnum)) {
                 if (!mustRole.equals(userRole)) {
                     throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
                 }
             }
         }
-        // 通过权限校验，放行
+        // Passes authority check, released
         return joinPoint.proceed();
     }
 }

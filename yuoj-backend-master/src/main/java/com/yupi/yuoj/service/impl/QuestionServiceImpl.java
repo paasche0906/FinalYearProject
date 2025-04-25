@@ -25,11 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
-* @author 李鱼皮
-* @description 针对表【question(题目)】的数据库操作Service实现
-* @createDate 2023-08-07 20:58:00
-*/
+
 @Service
 public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
     implements QuestionService{
@@ -39,7 +35,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
     private UserService userService;
 
     /**
-     * 校验题目是否合法
+     * Check if the title is legal
      * @param question
      * @param add
      */
@@ -54,30 +50,30 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
         String answer = question.getAnswer();
         String judgeCase = question.getJudgeCase();
         String judgeConfig = question.getJudgeConfig();
-        // 创建时，参数不能为空
+        // Parameters cannot be null when creating
         if (add) {
             ThrowUtils.throwIf(StringUtils.isAnyBlank(title, content, tags), ErrorCode.PARAMS_ERROR);
         }
-        // 有参数则校验
+        // Checksum with parameters
         if (StringUtils.isNotBlank(title) && title.length() > 80) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "标题过长");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "The title is too long");
         }
         if (StringUtils.isNotBlank(content) && content.length() > 8192) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "内容过长");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "excessive length");
         }
         if (StringUtils.isNotBlank(answer) && answer.length() > 8192) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "答案过长");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "The answer is too long.");
         }
         if (StringUtils.isNotBlank(judgeCase) && judgeCase.length() > 8192) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "判题用例过长");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Excessive length of judgement cases");
         }
         if (StringUtils.isNotBlank(judgeConfig) && judgeConfig.length() > 8192) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "判题配置过长");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "Excessively long judgement configurations");
         }
     }
 
     /**
-     * 获取查询包装类（用户根据哪些字段查询，根据前端传来的请求对象，得到 mybatis 框架支持的查询 QueryWrapper 类）
+     * Get the query wrapper class (which fields the user is querying based on, get the QueryWrapper class for queries supported by the mybatis framework based on the request object passed from the front-end)
      *
      * @param questionQueryRequest
      * @return
@@ -97,7 +93,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
         String sortField = questionQueryRequest.getSortField();
         String sortOrder = questionQueryRequest.getSortOrder();
 
-        // 拼接查询条件
+        // Splicing query conditions
         queryWrapper.like(StringUtils.isNotBlank(title), "title", title);
         queryWrapper.like(StringUtils.isNotBlank(content), "content", content);
         queryWrapper.like(StringUtils.isNotBlank(answer), "answer", answer);
@@ -117,7 +113,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
     @Override
     public QuestionVO getQuestionVO(Question question, HttpServletRequest request) {
         QuestionVO questionVO = QuestionVO.objToVo(question);
-        // 1. 关联查询用户信息
+        // 1. Associated query user information
         Long userId = question.getUserId();
         User user = null;
         if (userId != null && userId > 0) {
@@ -135,11 +131,11 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
         if (CollectionUtils.isEmpty(questionList)) {
             return questionVOPage;
         }
-        // 1. 关联查询用户信息
+        // 1. Associated query user information
         Set<Long> userIdSet = questionList.stream().map(Question::getUserId).collect(Collectors.toSet());
         Map<Long, List<User>> userIdUserListMap = userService.listByIds(userIdSet).stream()
                 .collect(Collectors.groupingBy(User::getId));
-        // 填充信息
+        // Fill in the information
         List<QuestionVO> questionVOList = questionList.stream().map(question -> {
             QuestionVO questionVO = QuestionVO.objToVo(question);
             Long userId = question.getUserId();

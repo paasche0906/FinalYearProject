@@ -5,26 +5,23 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 创建请求
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * Creating a request
  */
 @Data
 public class QuestionSubmitAddRequest implements Serializable {
 
     /**
-     * 编程语言
+     * programming language
      */
     private String language;
 
     /**
-     * 用户代码
+     * user code
      */
     private String code;
 
     /**
-     * 题目 id
+     * Title id
      */
     private Long questionId;
 

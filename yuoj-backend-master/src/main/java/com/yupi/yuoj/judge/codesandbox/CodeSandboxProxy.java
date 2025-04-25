@@ -16,9 +16,9 @@ public class CodeSandboxProxy implements CodeSandbox {
 
     @Override
     public ExecuteCodeResponse executeCode(ExecuteCodeRequest executeCodeRequest) {
-        log.info("Code Sandbox Request Information:" + executeCodeRequest.toString());
+        log.info("Code Sandbox Request Information：" + executeCodeRequest.toString());
         ExecuteCodeResponse executeCodeResponse = codeSandbox.executeCode(executeCodeRequest);
-        log.info("Code Sandbox Response Message:" + executeCodeResponse.toString());
+        log.info("Code Sandbox Response Messages：" + executeCodeResponse.toString());
         return executeCodeResponse;
     }
 }

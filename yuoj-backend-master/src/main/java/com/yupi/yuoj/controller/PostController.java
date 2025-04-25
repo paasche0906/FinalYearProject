@@ -31,10 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 帖子接口
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * posting interface
  */
 @RestController
 @RequestMapping("/post")
@@ -49,10 +46,10 @@ public class PostController {
 
     private final static Gson GSON = new Gson();
 
-    // region 增删改查
+    // region add, delete and check
 
     /**
-     * 创建
+     * establish
      *
      * @param postAddRequest
      * @param request
@@ -81,7 +78,7 @@ public class PostController {
     }
 
     /**
-     * 删除
+     * removing
      *
      * @param deleteRequest
      * @param request
@@ -94,10 +91,10 @@ public class PostController {
         }
         User user = userService.getLoginUser(request);
         long id = deleteRequest.getId();
-        // 判断是否存在
+        // Determine the existence of
         Post oldPost = postService.getById(id);
         ThrowUtils.throwIf(oldPost == null, ErrorCode.NOT_FOUND_ERROR);
-        // 仅本人或管理员可删除
+        // Can be deleted only by me or an administrator
         if (!oldPost.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
@@ -106,7 +103,7 @@ public class PostController {
     }
 
     /**
-     * 更新（仅管理员）
+     * Updates (administrators only)
      *
      * @param postUpdateRequest
      * @return
@@ -123,10 +120,10 @@ public class PostController {
         if (tags != null) {
             post.setTags(GSON.toJson(tags));
         }
-        // 参数校验
+        // parameter calibration
         postService.validPost(post, false);
         long id = postUpdateRequest.getId();
-        // 判断是否存在
+        // Determine the existence of
         Post oldPost = postService.getById(id);
         ThrowUtils.throwIf(oldPost == null, ErrorCode.NOT_FOUND_ERROR);
         boolean result = postService.updateById(post);
@@ -134,7 +131,7 @@ public class PostController {
     }
 
     /**
-     * 根据 id 获取
+     * Get by id
      *
      * @param id
      * @return
@@ -152,7 +149,7 @@ public class PostController {
     }
 
     /**
-     * 分页获取列表（封装类）
+     * Paging to get a list (wrapper class)
      *
      * @param postQueryRequest
      * @param request
@@ -163,7 +160,7 @@ public class PostController {
             HttpServletRequest request) {
         long current = postQueryRequest.getCurrent();
         long size = postQueryRequest.getPageSize();
-        // 限制爬虫
+        // Restriction of crawlers
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         Page<Post> postPage = postService.page(new Page<>(current, size),
                 postService.getQueryWrapper(postQueryRequest));
@@ -171,7 +168,7 @@ public class PostController {
     }
 
     /**
-     * 分页获取当前用户创建的资源列表
+     * Paging to get a list of resources created by the current user
      *
      * @param postQueryRequest
      * @param request
@@ -187,7 +184,7 @@ public class PostController {
         postQueryRequest.setUserId(loginUser.getId());
         long current = postQueryRequest.getCurrent();
         long size = postQueryRequest.getPageSize();
-        // 限制爬虫
+        // Restriction of crawlers
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         Page<Post> postPage = postService.page(new Page<>(current, size),
                 postService.getQueryWrapper(postQueryRequest));
@@ -197,7 +194,7 @@ public class PostController {
     // endregion
 
     /**
-     * 分页搜索（从 ES 查询，封装类）
+     * Paginated search (query from ES, wrapper class)
      *
      * @param postQueryRequest
      * @param request
@@ -207,14 +204,14 @@ public class PostController {
     public BaseResponse<Page<PostVO>> searchPostVOByPage(@RequestBody PostQueryRequest postQueryRequest,
             HttpServletRequest request) {
         long size = postQueryRequest.getPageSize();
-        // 限制爬虫
+        // Restriction of crawlers
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         Page<Post> postPage = postService.searchFromEs(postQueryRequest);
         return ResultUtils.success(postService.getPostVOPage(postPage, request));
     }
 
     /**
-     * 编辑（用户）
+     * Editor (user)
      *
      * @param postEditRequest
      * @param request
@@ -231,14 +228,14 @@ public class PostController {
         if (tags != null) {
             post.setTags(GSON.toJson(tags));
         }
-        // 参数校验
+        // parameter calibration
         postService.validPost(post, false);
         User loginUser = userService.getLoginUser(request);
         long id = postEditRequest.getId();
-        // 判断是否存在
+        // Determine the existence of
         Post oldPost = postService.getById(id);
         ThrowUtils.throwIf(oldPost == null, ErrorCode.NOT_FOUND_ERROR);
-        // 仅本人或管理员可编辑
+        // Editable by me or administrator only
         if (!oldPost.getUserId().equals(loginUser.getId()) && !userService.isAdmin(loginUser)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }

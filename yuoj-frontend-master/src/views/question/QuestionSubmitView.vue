@@ -86,14 +86,14 @@ const loadData = async () => {
 };
 
 /**
- * 监听 searchParams 变量，改变时触发页面的重新加载
+ * Listens to the searchParams variable and triggers a page reload when it changes.
  */
 watchEffect(() => {
   loadData();
 });
 
 /**
- * 页面加载时，请求数据
+ * Requesting data when the page loads
  */
 onMounted(() => {
   loadData();
@@ -140,7 +140,7 @@ const onPageChange = (page: number) => {
 const router = useRouter();
 
 /**
- * 跳转到做题页面
+ * Jump to the question page
  * @param question
  */
 const toQuestionPage = (question: Question) => {
@@ -150,10 +150,10 @@ const toQuestionPage = (question: Question) => {
 };
 
 /**
- * 确认搜索，重新加载数据
+ * Confirm search, reload data
  */
 const doSubmit = () => {
-  // 这里需要重置搜索页号
+  // Here you need to reset the search page number
   searchParams.value = {
     ...searchParams.value,
     current: 1,

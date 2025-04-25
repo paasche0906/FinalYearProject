@@ -9,15 +9,12 @@ import com.yupi.yuoj.model.vo.PostVO;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 帖子服务
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * posting service
  */
 public interface PostService extends IService<Post> {
 
     /**
-     * 校验
+     * calibration
      *
      * @param post
      * @param add
@@ -25,7 +22,7 @@ public interface PostService extends IService<Post> {
     void validPost(Post post, boolean add);
 
     /**
-     * 获取查询条件
+     * Get query conditions
      *
      * @param postQueryRequest
      * @return
@@ -33,7 +30,7 @@ public interface PostService extends IService<Post> {
     QueryWrapper<Post> getQueryWrapper(PostQueryRequest postQueryRequest);
 
     /**
-     * 从 ES 查询
+     * Query from ES
      *
      * @param postQueryRequest
      * @return
@@ -41,7 +38,7 @@ public interface PostService extends IService<Post> {
     Page<Post> searchFromEs(PostQueryRequest postQueryRequest);
 
     /**
-     * 获取帖子封装
+     * Get post wrapper
      *
      * @param post
      * @param request
@@ -50,7 +47,7 @@ public interface PostService extends IService<Post> {
     PostVO getPostVO(Post post, HttpServletRequest request);
 
     /**
-     * 分页获取帖子封装
+     * Paging for post encapsulation
      *
      * @param postPage
      * @param request

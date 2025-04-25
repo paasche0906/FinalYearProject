@@ -53,7 +53,7 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 /**
- * 表单信息
+ * form information
  */
 const form = reactive({
   userAccount: "",
@@ -66,7 +66,7 @@ const router = useRouter();
 const store = useStore();
 
 /**
- * 提交表单
+ * Submit form
  */
 const handleSubmit = async () => {
   if (form.userPassword !== form.confirmPassword) {
@@ -75,7 +75,7 @@ const handleSubmit = async () => {
   }
 
   const res = await UserControllerService.userRegisterUsingPost(form);
-  // 注册成功，跳转到登录页面
+  // Successful registration, jump to the login page
   if (res.code === 0) {
     message.success("Registration successful, please log in");
     router.push({

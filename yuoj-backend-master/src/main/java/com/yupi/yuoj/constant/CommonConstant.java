@@ -1,20 +1,17 @@
 package com.yupi.yuoj.constant;
 
 /**
- * 通用常量
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * universal constant
  */
 public interface CommonConstant {
 
     /**
-     * 升序
+     * ascending order
      */
     String SORT_ORDER_ASC = "ascend";
 
     /**
-     * 降序
+     * descending order
      */
     String SORT_ORDER_DESC = " descend";
     

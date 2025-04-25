@@ -40,13 +40,13 @@ import ACCESS_ENUM from "@/access/accessEnum";
 const router = useRouter();
 const store = useStore();
 
-// 展示在菜单的路由数组
+// Display the routing array in the menu
 const visibleRoutes = computed(() => {
   return routes.filter((item, index) => {
     if (item.meta?.hideInMenu) {
       return false;
     }
-    // 根据权限过滤菜单
+    // Filter menus by permission
     if (
       !checkAccess(store.state.user.loginUser, item?.meta?.access as string)
     ) {
@@ -56,10 +56,10 @@ const visibleRoutes = computed(() => {
   });
 });
 
-// 默认主页
+// Default homepage
 const selectedKeys = ref(["/"]);
 
-// 路由跳转后，更新选中的菜单项
+// Update selected menu items after routing jumps
 router.afterEach((to, from, failure) => {
   selectedKeys.value = [to.path];
 });

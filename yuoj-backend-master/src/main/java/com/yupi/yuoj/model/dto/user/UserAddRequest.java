@@ -4,31 +4,28 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * 用户创建请求
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * User Creation Request
  */
 @Data
 public class UserAddRequest implements Serializable {
 
     /**
-     * 用户昵称
+     * user nickname
      */
     private String userName;
 
     /**
-     * 账号
+     * username
      */
     private String userAccount;
 
     /**
-     * 用户头像
+     * user avatar
      */
     private String userAvatar;
 
     /**
-     * 用户角色: user, admin
+     * User roles: user, admin
      */
     private String userRole;
 

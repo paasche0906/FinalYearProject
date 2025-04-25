@@ -19,10 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 帖子收藏服务实现
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * Post Collection Service Implementation
  */
 @Service
 public class PostFavourServiceImpl extends ServiceImpl<PostFavourMapper, PostFavour>
@@ -32,7 +29,7 @@ public class PostFavourServiceImpl extends ServiceImpl<PostFavourMapper, PostFav
     private PostService postService;
 
     /**
-     * 帖子收藏
+     * Post Favorites
      *
      * @param postId
      * @param loginUser
@@ -40,15 +37,14 @@ public class PostFavourServiceImpl extends ServiceImpl<PostFavourMapper, PostFav
      */
     @Override
     public int doPostFavour(long postId, User loginUser) {
-        // 判断是否存在
+        // Determine the existence of
         Post post = postService.getById(postId);
         if (post == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
-        // 是否已帖子收藏
+
         long userId = loginUser.getId();
-        // 每个用户串行帖子收藏
-        // 锁必须要包裹住事务方法
+
         PostFavourService postFavourService = (PostFavourService) AopContext.currentProxy();
         synchronized (String.valueOf(userId).intern()) {
             return postFavourService.doPostFavourInner(userId, postId);
@@ -63,13 +59,6 @@ public class PostFavourServiceImpl extends ServiceImpl<PostFavourMapper, PostFav
         return baseMapper.listFavourPostByPage(page, queryWrapper, favourUserId);
     }
 
-    /**
-     * 封装了事务的方法
-     *
-     * @param userId
-     * @param postId
-     * @return
-     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int doPostFavourInner(long userId, long postId) {
@@ -79,11 +68,11 @@ public class PostFavourServiceImpl extends ServiceImpl<PostFavourMapper, PostFav
         QueryWrapper<PostFavour> postFavourQueryWrapper = new QueryWrapper<>(postFavour);
         PostFavour oldPostFavour = this.getOne(postFavourQueryWrapper);
         boolean result;
-        // 已收藏
+
         if (oldPostFavour != null) {
             result = this.remove(postFavourQueryWrapper);
             if (result) {
-                // 帖子收藏数 - 1
+
                 result = postService.update()
                         .eq("id", postId)
                         .gt("favourNum", 0)
@@ -94,10 +83,10 @@ public class PostFavourServiceImpl extends ServiceImpl<PostFavourMapper, PostFav
                 throw new BusinessException(ErrorCode.SYSTEM_ERROR);
             }
         } else {
-            // 未帖子收藏
+
             result = this.save(postFavour);
             if (result) {
-                // 帖子收藏数 + 1
+
                 result = postService.update()
                         .eq("id", postId)
                         .setSql("favourNum = favourNum + 1")

@@ -30,10 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 题目接口
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * question interface
  */
 @RestController
 @RequestMapping("/question")
@@ -51,10 +48,10 @@ public class QuestionController {
 
     private final static Gson GSON = new Gson();
 
-    // region 增删改查
+    // region add, delete and check
 
     /**
-     * 创建
+     * establish
      *
      * @param questionAddRequest
      * @param request
@@ -91,7 +88,7 @@ public class QuestionController {
     }
 
     /**
-     * 删除
+     * removing
      *
      * @param deleteRequest
      * @param request
@@ -104,10 +101,10 @@ public class QuestionController {
         }
         User user = userService.getLoginUser(request);
         long id = deleteRequest.getId();
-        // 判断是否存在
+        // Determine the existence of
         Question oldQuestion = questionService.getById(id);
         ThrowUtils.throwIf(oldQuestion == null, ErrorCode.NOT_FOUND_ERROR);
-        // 仅本人或管理员可删除
+        // Can be deleted only by me or an administrator
         if (!oldQuestion.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
@@ -116,7 +113,7 @@ public class QuestionController {
     }
 
     /**
-     * 更新（仅管理员）
+     * Update(admin)
      *
      * @param questionUpdateRequest
      * @return
@@ -141,10 +138,10 @@ public class QuestionController {
         if (judgeConfig != null) {
             question.setJudgeConfig(GSON.toJson(judgeConfig));
         }
-        // 参数校验
+        // parameter calibration
         questionService.validQuestion(question, false);
         long id = questionUpdateRequest.getId();
-        // 判断是否存在
+        // Determine the existence of
         Question oldQuestion = questionService.getById(id);
         ThrowUtils.throwIf(oldQuestion == null, ErrorCode.NOT_FOUND_ERROR);
         boolean result = questionService.updateById(question);
@@ -152,7 +149,7 @@ public class QuestionController {
     }
 
     /**
-     * 根据 id 获取
+     * Get by id
      *
      * @param id
      * @return
@@ -167,7 +164,7 @@ public class QuestionController {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
         User loginUser = userService.getLoginUser(request);
-        // 不是本人或管理员，不能直接获取所有信息
+        // No direct access to all information if you are not the person or the administrator
         if (!question.getUserId().equals(loginUser.getId()) && !userService.isAdmin(loginUser)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
@@ -175,7 +172,7 @@ public class QuestionController {
     }
 
     /**
-     * 根据 id 获取（脱敏）
+     * Get by id (desensitised)
      *
      * @param id
      * @return
@@ -193,7 +190,7 @@ public class QuestionController {
     }
 
     /**
-     * 分页获取列表（封装类）
+     * Paging to get a list (wrapper class)
      *
      * @param questionQueryRequest
      * @param request
@@ -204,7 +201,7 @@ public class QuestionController {
             HttpServletRequest request) {
         long current = questionQueryRequest.getCurrent();
         long size = questionQueryRequest.getPageSize();
-        // 限制爬虫
+        // Restriction of crawlers
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         Page<Question> questionPage = questionService.page(new Page<>(current, size),
                 questionService.getQueryWrapper(questionQueryRequest));
@@ -212,7 +209,7 @@ public class QuestionController {
     }
 
     /**
-     * 分页获取当前用户创建的资源列表
+     * Paging to get a list of resources created by the current user
      *
      * @param questionQueryRequest
      * @param request
@@ -228,7 +225,7 @@ public class QuestionController {
         questionQueryRequest.setUserId(loginUser.getId());
         long current = questionQueryRequest.getCurrent();
         long size = questionQueryRequest.getPageSize();
-        // 限制爬虫
+        // Restriction of crawlers
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         Page<Question> questionPage = questionService.page(new Page<>(current, size),
                 questionService.getQueryWrapper(questionQueryRequest));
@@ -236,7 +233,7 @@ public class QuestionController {
     }
 
     /**
-     * 分页获取题目列表（仅管理员）
+     * Pagination to get a list of topics (administrator only)
      *
      * @param questionQueryRequest
      * @param request
@@ -256,7 +253,7 @@ public class QuestionController {
     // endregion
 
     /**
-     * 编辑（用户）
+     * Editor (user)
      *
      * @param questionEditRequest
      * @param request
@@ -281,14 +278,14 @@ public class QuestionController {
         if (judgeConfig != null) {
             question.setJudgeConfig(GSON.toJson(judgeConfig));
         }
-        // 参数校验
+        // parameter calibration
         questionService.validQuestion(question, false);
         User loginUser = userService.getLoginUser(request);
         long id = questionEditRequest.getId();
-        // 判断是否存在
+        // Determine the existence of
         Question oldQuestion = questionService.getById(id);
         ThrowUtils.throwIf(oldQuestion == null, ErrorCode.NOT_FOUND_ERROR);
-        // 仅本人或管理员可编辑
+        // Editable by me or administrator only
         if (!oldQuestion.getUserId().equals(loginUser.getId()) && !userService.isAdmin(loginUser)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
@@ -297,11 +294,11 @@ public class QuestionController {
     }
 
     /**
-     * 提交题目
+     * Title of submission
      *
      * @param questionSubmitAddRequest
      * @param request
-     * @return 提交记录的 id
+     * @return The id of the submitted record
      */
     @PostMapping("/question_submit/do")
     public BaseResponse<Long> doQuestionSubmit(@RequestBody QuestionSubmitAddRequest questionSubmitAddRequest,
@@ -309,14 +306,14 @@ public class QuestionController {
         if (questionSubmitAddRequest == null || questionSubmitAddRequest.getQuestionId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        // 登录才能点赞
+        // Log in to like
         final User loginUser = userService.getLoginUser(request);
         long questionSubmitId = questionSubmitService.doQuestionSubmit(questionSubmitAddRequest, loginUser);
         return ResultUtils.success(questionSubmitId);
     }
 
     /**
-     * 分页获取题目提交列表（除了管理员外，普通用户只能看到非答案、提交代码等公开信息）
+     * Pagination to get a list of question submissions (except for administrators, normal users can only see public information such as non-answers, submission codes, etc.)
      *
      * @param questionSubmitQueryRequest
      * @param request
@@ -327,11 +324,11 @@ public class QuestionController {
                                                                          HttpServletRequest request) {
         long current = questionSubmitQueryRequest.getCurrent();
         long size = questionSubmitQueryRequest.getPageSize();
-        // 从数据库中查询原始的题目提交分页信息
+        // Query the original topic submission paging information from the database
         Page<QuestionSubmit> questionSubmitPage = questionSubmitService.page(new Page<>(current, size),
                 questionSubmitService.getQueryWrapper(questionSubmitQueryRequest));
         final User loginUser = userService.getLoginUser(request);
-        // 返回脱敏信息
+        // Return to Desensitisation Information
         return ResultUtils.success(questionSubmitService.getQuestionSubmitVOPage(questionSubmitPage, loginUser));
     }
 

@@ -3,12 +3,12 @@ package com.yupi.yuoj.judge.strategy;
 import com.yupi.yuoj.judge.codesandbox.model.JudgeInfo;
 
 /**
- * 判题策略
+ * strategy for deciding questions
  */
 public interface JudgeStrategy {
 
     /**
-     * 执行判题
+     * Enforcement of judgements
      * @param judgeContext
      * @return
      */

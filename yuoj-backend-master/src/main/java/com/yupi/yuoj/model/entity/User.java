@@ -10,10 +10,7 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 用户
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * user
  */
 @TableName(value = "user")
 @Data
@@ -26,57 +23,57 @@ public class User implements Serializable {
     private Long id;
 
     /**
-     * 用户账号
+     * user account
      */
     private String userAccount;
 
     /**
-     * 用户密码
+     * user password
      */
     private String userPassword;
 
     /**
-     * 开放平台id
+     * Open platform id
      */
     private String unionId;
 
     /**
-     * 公众号openId
+     * Public openId
      */
     private String mpOpenId;
 
     /**
-     * 用户昵称
+     * user nickname
      */
     private String userName;
 
     /**
-     * 用户头像
+     * user avatar
      */
     private String userAvatar;
 
     /**
-     * 用户简介
+     * User Profile
      */
     private String userProfile;
 
     /**
-     * 用户角色：user/admin/ban
+     * User roles: user/admin/ban
      */
     private String userRole;
 
     /**
-     * 创建时间
+     * Creation time
      */
     private Date createTime;
 
     /**
-     * 更新时间
+     * update time
      */
     private Date updateTime;
 
     /**
-     * 是否删除
+     * Delete or not
      */
     @TableLogic
     private Integer isDelete;

@@ -12,7 +12,7 @@ public class CodeSandboxFactory {
     /**
      * Example of creating a code sandbox
      *
-     * @param type Sandbox Type
+     * @param type Sandbox type
      * @return
      */
     public static CodeSandbox newInstance(String type) {

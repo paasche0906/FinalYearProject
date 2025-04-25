@@ -113,7 +113,7 @@ import message from "@arco-design/web-vue/es/message";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-// 如果页面地址包含 update，视为更新页面
+// If the page address contains update, the page is considered updated
 const updatePage = route.path.includes("update");
 
 let form = ref({
@@ -135,7 +135,7 @@ let form = ref({
 });
 
 /**
- * 根据题目 id 获取老的数据
+ * Get old data by topic id
  */
 const loadData = async () => {
   const id = route.query.id;
@@ -147,7 +147,7 @@ const loadData = async () => {
   );
   if (res.code === 0) {
     form.value = res.data as any;
-    // json 转 js 对象
+    // json to js object
     if (!form.value.judgeCase) {
       form.value.judgeCase = [
         {
@@ -183,7 +183,7 @@ onMounted(() => {
 
 const doSubmit = async () => {
   console.log(form.value);
-  // 区分更新还是创建
+  // Distinguish between updating and creating
   if (updatePage) {
     const res = await QuestionControllerService.updateQuestionUsingPost(
       form.value
@@ -206,7 +206,7 @@ const doSubmit = async () => {
 };
 
 /**
- * 新增判题用例
+ * Add a new example of problem solving
  */
 const handleAdd = () => {
   form.value.judgeCase.push({
@@ -216,7 +216,7 @@ const handleAdd = () => {
 };
 
 /**
- * 删除判题用例
+ * Deletion of Judgement Cases
  */
 const handleDelete = (index: number) => {
   form.value.judgeCase.splice(index, 1);

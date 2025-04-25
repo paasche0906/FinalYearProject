@@ -15,12 +15,9 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
- * 帖子 ES 包装类
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * Posts ES Packaging
  **/
-// todo 取消注释开启 ES（须先配置 ES）
+
 //@Document(indexName = "post")
 @Data
 public class PostEsDTO implements Serializable {
@@ -34,49 +31,49 @@ public class PostEsDTO implements Serializable {
     private Long id;
 
     /**
-     * 标题
+     * title
      */
     private String title;
 
     /**
-     * 内容
+     * content
      */
     private String content;
 
     /**
-     * 标签列表
+     * Tag List
      */
     private List<String> tags;
 
     /**
-     * 点赞数
+     * number of likes (on a website)
      */
     private Integer thumbNum;
 
     /**
-     * 收藏数
+     * Number of collections
      */
     private Integer favourNum;
 
     /**
-     * 创建用户 id
+     * Create user id
      */
     private Long userId;
 
     /**
-     * 创建时间
+     * Creation time
      */
     @Field(index = false, store = true, type = FieldType.Date, format = {}, pattern = DATE_TIME_PATTERN)
     private Date createTime;
 
     /**
-     * 更新时间
+     * update time
      */
     @Field(index = false, store = true, type = FieldType.Date, format = {}, pattern = DATE_TIME_PATTERN)
     private Date updateTime;
 
     /**
-     * 是否删除
+     * Delete or not
      */
     private Integer isDelete;
 
@@ -85,7 +82,7 @@ public class PostEsDTO implements Serializable {
     private static final Gson GSON = new Gson();
 
     /**
-     * 对象转包装类
+     * object-to-wrapper class
      *
      * @param post
      * @return
@@ -105,7 +102,7 @@ public class PostEsDTO implements Serializable {
     }
 
     /**
-     * 包装类转对象
+     * wrapper class to object
      *
      * @param postEsDTO
      * @return

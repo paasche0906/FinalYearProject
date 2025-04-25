@@ -10,16 +10,12 @@ import com.yupi.yuoj.model.vo.QuestionVO;
 
 import javax.servlet.http.HttpServletRequest;
 
-/**
-* @author 李鱼皮
-* @description 针对表【question(题目)】的数据库操作Service
-* @createDate 2023-08-07 20:58:00
-*/
+
 public interface QuestionService extends IService<Question> {
 
 
     /**
-     * 校验
+     * calibration
      *
      * @param question
      * @param add
@@ -27,7 +23,7 @@ public interface QuestionService extends IService<Question> {
     void validQuestion(Question question, boolean add);
 
     /**
-     * 获取查询条件
+     * Get query conditions
      *
      * @param questionQueryRequest
      * @return
@@ -35,7 +31,7 @@ public interface QuestionService extends IService<Question> {
     QueryWrapper<Question> getQueryWrapper(QuestionQueryRequest questionQueryRequest);
     
     /**
-     * 获取题目封装
+     * Get the title package
      *
      * @param question
      * @param request
@@ -44,7 +40,7 @@ public interface QuestionService extends IService<Question> {
     QuestionVO getQuestionVO(Question question, HttpServletRequest request);
 
     /**
-     * 分页获取题目封装
+     * Paging for topic encapsulation
      *
      * @param questionPage
      * @param request

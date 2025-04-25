@@ -11,10 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 腾讯云对象存储客户端
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * Tencent Cloud Object Storage Client
  */
 @Configuration
 @ConfigurationProperties(prefix = "cos.client")
@@ -32,22 +29,21 @@ public class CosClientConfig {
     private String secretKey;
 
     /**
-     * 区域
+     * district
      */
     private String region;
 
     /**
-     * 桶名
+     * barrel name
      */
     private String bucket;
 
     @Bean
     public COSClient cosClient() {
-        // 初始化用户身份信息(secretId, secretKey)
+        // Initialise user identity information (secretId, secretKey)
         COSCredentials cred = new BasicCOSCredentials(accessKey, secretKey);
-        // 设置bucket的区域, COS地域的简称请参照 https://www.qcloud.com/document/product/436/6224
         ClientConfig clientConfig = new ClientConfig(new Region(region));
-        // 生成cos客户端
+        // Generate cos client
         return new COSClient(cred, clientConfig);
     }
 }
